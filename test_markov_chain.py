@@ -68,14 +68,13 @@ class TestMarkovChain(unittest.TestCase):
             self.s2: {self.s1: 0.3, self.s2: 0.7, self.s3: 0.0},
             self.s3: {self.s1: 0.1, self.s2: 0.7, self.s3: 0.2}
         }
+        self.test_markov_chain = MarkovChain("Markov Chain 1", self.valid_trans)
 
     def test_init(self):
         """
         Test that the constructor raises an AssertionError when the given
         `transitions` are ill-defined.
         """
-        test_markov_chain = MarkovChain("Markov Chain 1", self.valid_trans)
-
         invalid_transitions = {
             self.s1: {self.s1: 0.2, self.s2: 0.4, self.s3: 0.3},
             self.s2: {self.s1: 0.3, self.s2: 0.7, self.s3: 0.0},
@@ -85,26 +84,20 @@ class TestMarkovChain(unittest.TestCase):
 
     def test_getLabel(self):
         """ Test that `getLabel()` returns the correct value. """
-        test_markov_chain = MarkovChain("Markov Chain 1", self.valid_trans)
-
         expected = "Markov Chain 1"
-        actual = test_markov_chain.getLabel()
+        actual = self.test_markov_chain.getLabel()
         self.assertEqual(expected, actual)
 
     def test_getStates(self):
         """ Test that `getStates()` returns the correct value. """
-        test_markov_chain = MarkovChain("Markov Chain 1", self.valid_trans)
-
         expected = [self.s1, self.s2, self.s3]
-        actual = test_markov_chain.getStates()
+        actual = self.test_markov_chain.getStates()
         self.assertListEqual(expected, actual)
 
     def test_getTransitions(self):
         """ Test that `getTransitions()` returns the correct value. """
-        test_markov_chain = MarkovChain("Markov Chain 1", self.valid_trans)
-
         expected = self.valid_trans
-        actual = test_markov_chain.getTransitions()
+        actual = self.test_markov_chain.getTransitions()
         self.assertDictEqual(expected, actual)
 
     def test_getNextState(self):
@@ -113,19 +106,17 @@ class TestMarkovChain(unittest.TestCase):
         `current_state` and returns a valid value based on `current_state` and
         `_transitions`.
         """
-        test_markov_chain = MarkovChain("Markov Chain 1", self.valid_trans)
-
-        self.assertRaises(AssertionError, test_markov_chain.getNextState, self.s4)
+        self.assertRaises(AssertionError, self.test_markov_chain.getNextState, self.s4)
 
         for i in range(100):
             expected = [self.s1, self.s2, self.s3]
-            actual = test_markov_chain.getNextState(self.s1)
+            actual = self.test_markov_chain.getNextState(self.s1)
             self.assertIn(actual, expected)
 
         # With current transition probabilities, `s2` should never get to `s3`
         for i in range(100):
             expected = [self.s1, self.s2]
-            actual = test_markov_chain.getNextState(self.s2)
+            actual = self.test_markov_chain.getNextState(self.s2)
             self.assertIn(actual, expected)
 
     def test_generateStates(self):
@@ -134,12 +125,10 @@ class TestMarkovChain(unittest.TestCase):
         `current_state` and returns a valid sequence of future states based on
         `current_state` and `_transitions`.
         """
-        test_markov_chain = MarkovChain("Markov Chain 1", self.valid_trans)
-        
-        self.assertRaises(AssertionError, test_markov_chain.generateStates, self.s4)
+        self.assertRaises(AssertionError, self.test_markov_chain.generateStates, self.s4)
 
         for i in range(100):
-            actual = test_markov_chain.generateStates(self.s1, 100)
+            actual = self.test_markov_chain.generateStates(self.s1, 100)
             prev_state = actual[0].getLabel()
             for curr_state in range(1, len(actual)):
                 if prev_state == "State 2":
