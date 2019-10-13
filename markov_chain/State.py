@@ -37,6 +37,9 @@ class State():
 
     def __str__(self):
         """ Return custom string representation of the `State` object. """
-        return str(self.__dict__())
+        return str({
+            "label": self._label,
+            "info": self._info
+        })
 
 
