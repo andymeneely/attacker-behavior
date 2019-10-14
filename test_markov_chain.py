@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
+import os
+import re
+import shutil
 import unittest
+from markov_chain import TEST_DIR
 from markov_chain.MarkovChain import MarkovChain
 from markov_chain.State import State
 
@@ -134,6 +138,50 @@ class TestMarkovChain(unittest.TestCase):
                 if prev_state == "State 2":
                     self.assertNotEqual("State 3", curr_state)
 
+    def test_drawVisualization(self):
+        """
+
+        """
+        # Set Up
+        if not os.path.exists(TEST_DIR):
+            os.mkdir(TEST_DIR)
+
+        invalid_dir = TEST_DIR[:-1]
+        self.assertRaises(AssertionError, self.test_markov_chain.drawVisualization, invalid_dir)
+
+        markov_graph, markov_graph_path = self.test_markov_chain.drawVisualization(TEST_DIR, "blah", view=False)
+        self.assertTrue(os.path.exists(markov_graph_path))
+
+        markov_graph, markov_graph_path = self.test_markov_chain.drawVisualization(TEST_DIR)
+        self.assertTrue(os.path.exists(markov_graph_path))
+        expected = """// Markov Chain 1
+                    digraph {
+                        node [shape=box]
+                        node [style=filled]
+                        node [fillcolor="#EEE9E9"]
+                        rankdir=LR
+                        splines=polyline
+                        "State 1" [label="State 1"]
+                        "State 2" [label="State 2"]
+                        "State 3" [label="State 3"]
+                        "State 1" -> "State 1" [label=0.3]
+                        "State 1" -> "State 2" [label=0.4]
+                        "State 1" -> "State 3" [label=0.3]
+                        "State 2" -> "State 1" [label=0.3]
+                        "State 2" -> "State 2" [label=0.7]
+                        "State 3" -> "State 1" [label=0.1]
+                        "State 3" -> "State 2" [label=0.7]
+                        "State 3" -> "State 3" [label=0.2]
+                    }"""
+        expected = re.sub(r" +", " ", re.sub(r"[\n\t]", " ", expected))
+        actual = markov_graph.source
+        actual = re.sub(r" +", " ", re.sub(r"[\n\t]", " ", actual))
+        self.assertEqual(expected, actual)
+
+        # Tear Down
+        shutil.rmtree(TEST_DIR)
+        
+
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(warnings="ignore")

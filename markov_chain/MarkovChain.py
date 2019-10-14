@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 import numpy as np
+import os
+from graphviz import Digraph
+from markov_chain import SVG_DIR
 
 class MarkovChain():
     """ A `MarkovChain` object represents a Markov chain. """
@@ -74,4 +77,42 @@ class MarkovChain():
             future_states.append(next_state)
             current_state = next_state
         return future_states
+
+    def drawVisualization(self, out_dir=SVG_DIR, out_name=None, view=True):
+        """
+        Generate a the DOT Graphviz representation of the `MarkovChain` with
+        states and transitions.
+
+        Arguments:
+        out_dir     directory to save the generated `.dot` and `.svg` files to
+        out_name    name to use when saving generated `.dot` and `.svg`
+        view        whether or not to save and open the rendered graph (True)
+                    or to just save the rendered graph (False)
+        """
+        assert os.path.exists(out_dir)
+        markov_graph = Digraph(comment = self.getLabel(), format="svg")
+        markov_graph.attr("node", shape="box")
+        markov_graph.attr("node", style="filled")
+        markov_graph.attr("node", fillcolor="#EEE9E9")
+        markov_graph.attr(rankdir="LR")
+        markov_graph.attr(splines="polyline")
+
+        for state in self.getStates():
+            markov_graph.node(state.getLabel(), state.getLabel())
+
+        for start_state, probs in self.getTransitions().items():
+            for end_state, prob in probs.items():
+                if prob != 0:
+                    markov_graph.edge(
+                        start_state.getLabel(),
+                        end_state.getLabel(),
+                        label=str(prob)
+                    )
+
+        if out_name is None:
+            out_name = "_".join(self.getLabel().lower().split(" ")) + ".dot"
+        out_path = os.path.join(out_dir, out_name)
+        markov_graph.render(out_path, view=view)
+        return markov_graph, out_path
+
 
