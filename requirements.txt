@@ -1,3 +1,5 @@
 coverage
 graphviz
 numpy
+pydot-ng
+pyparsing
