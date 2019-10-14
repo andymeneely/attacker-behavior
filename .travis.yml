@@ -3,6 +3,9 @@ python:
         - "3.6"
         - "3.7"
 
+before_install:
+        - sudo apt install graphviz pydot-ng pyparsing
+
 install:
         - pip install -r requirements.txt
 
