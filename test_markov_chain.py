@@ -5,7 +5,7 @@ import re
 import shutil
 import unittest
 from markov_chain import TEST_DIR
-from markov_chain.MarkovChain import MarkovChain
+from markov_chain.MarkovChain import MarkovChain, StandardMarkovChain
 from markov_chain.State import State
 
 class TestState(unittest.TestCase):
@@ -60,7 +60,7 @@ class TestState(unittest.TestCase):
         actual = self.test_state.__str__()
         self.assertEqual(expected, actual)
 
-class TestMarkovChain(unittest.TestCase):
+class TestStandardMarkovChain(unittest.TestCase):
 
     def setUp(self):
         self.s1 = State("State 1")
@@ -72,7 +72,7 @@ class TestMarkovChain(unittest.TestCase):
             self.s2: {self.s1: 0.3, self.s2: 0.7, self.s3: 0.0},
             self.s3: {self.s1: 0.1, self.s2: 0.7, self.s3: 0.2}
         }
-        self.test_markov_chain = MarkovChain("Markov Chain 1", self.valid_trans)
+        self.test_markov_chain = StandardMarkovChain("Markov Chain 1", self.valid_trans)
 
     def test_init(self):
         """
@@ -84,7 +84,7 @@ class TestMarkovChain(unittest.TestCase):
             self.s2: {self.s1: 0.3, self.s2: 0.7, self.s3: 0.0},
             self.s3: {self.s1: 0.1, self.s2: 0.7, self.s3: 0.2}
         }
-        self.assertRaises(AssertionError, MarkovChain, "", invalid_transitions)
+        self.assertRaises(AssertionError, StandardMarkovChain, "", invalid_transitions)
 
     def test_getLabel(self):
         """ Test that `getLabel()` returns the correct value. """
@@ -181,7 +181,6 @@ class TestMarkovChain(unittest.TestCase):
         # Tear Down
         shutil.rmtree(TEST_DIR)
         
-
 
 if __name__ == "__main__":
     unittest.main(warnings="ignore")

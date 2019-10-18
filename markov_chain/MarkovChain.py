@@ -2,10 +2,11 @@
 
 import numpy as np
 import os
+from abc import ABC, abstractmethod
 from graphviz import Digraph
 from markov_chain import SVG_DIR
 
-class MarkovChain():
+class MarkovChain(ABC):
     """ A `MarkovChain` object represents a Markov chain. """
 
     def __init__(self, label="", transitions=dict()):
@@ -25,16 +26,53 @@ class MarkovChain():
         self._transitions = transitions
         self._states = list(transitions.keys())
 
-    def _checkTransitionIntegrity(self, transitions):
+    @abstractmethod
+    def _checkTransitionIntegrity(self, transitions): # pragma: no cover
         """
-        Return `True` if the transition probabilities are valid (if the
-        probabilities for each state add up to 1). Return `False` otherwise.
+        Return `True` if the transition probabilities are valid. Return `False`
+        otherwise.
         """
-        for state, trans in transitions.items():
-            if sum(list(trans.values())) != 1:
-                return False
+        raise NotImplementedError("This is an abstract method that must be "
+            "implemented!")
 
-        return True
+    @abstractmethod
+    def getNextState(self, current_state): # pragma: no cover
+        """
+        Return the state of the random variable at the next time instance.
+
+        Arguments:
+        current_state   a `State` object that exists within the `MarkovChain`
+        """
+        raise NotImplementedError("This is an abstract method that must be "
+            "implemented!")
+       
+
+    @abstractmethod
+    def generateStates(self, current_state, num_states=10): # pragma: no cover
+        """
+        Generate the next `num_states` states of the `MarkovChain`.
+
+        Arguments:
+        current_state   a `State object that exists within the `MarkovChain`
+        num_states      the number of future states to generate
+        """
+        raise NotImplementedError("This is an abstract method that must be "
+            "implemented!")
+
+    @abstractmethod
+    def drawVisualization(self, out_dir=SVG_DIR, out_name=None, view=True): # pragma: no cover
+        """
+        Generate a the DOT Graphviz representation of the `MarkovChain` with
+        states and transitions.
+
+        Arguments:
+        out_dir     directory to save the generated `.dot` and `.svg` files to
+        out_name    name to use when saving generated `.dot` and `.svg`
+        view        whether or not to save and open the rendered graph (True)
+                    or to just save the rendered graph (False)
+        """
+        raise NotImplementedError("This is an abstract method that must be "
+            "implemented!")
 
     def getLabel(self):
         """ Return `self._label`. """
@@ -47,6 +85,20 @@ class MarkovChain():
     def getTransitions(self):
         """ Return `self._transitions`. """
         return self._transitions
+
+
+class StandardMarkovChain(MarkovChain):
+
+    def _checkTransitionIntegrity(self, transitions):
+        """
+        Return `True` if the transition probabilities are valid (if the
+        probabilities for each state add up to 1). Return `False` otherwise.
+        """
+        for state, trans in transitions.items():
+            if sum(list(trans.values())) != 1:
+                return False
+
+        return True
 
     def getNextState(self, current_state):
         """
@@ -114,5 +166,4 @@ class MarkovChain():
         out_path = os.path.join(out_dir, out_name)
         markov_graph.render(out_path, view=view)
         return markov_graph, out_path
-
 
