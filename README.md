@@ -13,8 +13,8 @@ There are Python libraries that allow you to download a Google Sheet using Googl
 
 ### Prerequisite
 
-To use these scripts, you need to open one of the timeline spreadsheets ([example]
-(https://docs.google.com/spreadsheets/d/1Q6w5TAvlZszQL71pNK2QKzBs_p1MdE4kCId1kXIdAOk/edit#gid=0)) in Google Drive.
+To use these scripts, you need to open one of the timeline spreadsheets ( [example]
+(https://docs.google.com/spreadsheets/d/1Q6w5TAvlZszQL71pNK2QKzBs_p1MdE4kCId1kXIdAOk/edit#gid=0) ) in Google Drive.
 
 Then use `File-->Download-->Comma-separated values (.csv, current sheet)` on the default sheet. Save this file to the `data/` directory in this module.
 
