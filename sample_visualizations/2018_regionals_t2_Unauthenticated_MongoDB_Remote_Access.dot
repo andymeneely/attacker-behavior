@@ -1,0 +1,11 @@
+// 2018 regionals, Team 2: Unauthenticated MongoDB Remote Access
+digraph {
+	node [shape=box]
+	node [style=filled]
+	node [fillcolor="#EEE9E9"]
+	rankdir=LR
+	splines=polyline
+	"Network Service Scanning" [label="Network Service Scanning" fillcolor="#A2E8E8"]
+	"Brute Force, Remote Services" [label="Brute Force, Remote Services" fillcolor="#FF9E9E"]
+	"Network Service Scanning" -> "Brute Force, Remote Services" [label="2018-11-03 11:10:18 AM"]
+}

@@ -4,7 +4,7 @@ import datetime
 
 from timeline.helpers import strToDatetime, timeDiff
 
-DATETIME_FORMAT = "%m/%d/%Y %H:%M:%S %p %Z"
+DATETIME_FORMAT = "%m/%d/%Y %I:%M:%S %p %Z"
 
 class State:
     def __init__(self, start_time, stop_time, tactic, technique):
@@ -47,6 +47,9 @@ class State:
     def getTechnique(self):
         return self._technique
 
+    def isFinal(self):
+        return self._duration == "N/A"
+
     def __dict__(self):
         return {
             "start_time": self.getStartTime(),
@@ -54,4 +57,4 @@ class State:
             "duration": self.getDuration(),
             "tactic": self.getTactic(),
             "technique": self.getTechnique()
-        }
+            }

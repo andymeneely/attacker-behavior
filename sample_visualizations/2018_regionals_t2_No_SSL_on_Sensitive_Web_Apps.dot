@@ -1,0 +1,9 @@
+// 2018 regionals, Team 2: No SSL on Sensitive Web Apps
+digraph {
+	node [shape=box]
+	node [style=filled]
+	node [fillcolor="#EEE9E9"]
+	rankdir=LR
+	splines=polyline
+	"Network Service Scanning" [label="Network Service Scanning" fillcolor="#A2E8E8"]
+}

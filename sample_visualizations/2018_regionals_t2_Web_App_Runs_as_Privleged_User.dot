@@ -1,0 +1,9 @@
+// 2018 regionals, Team 2: Web App Runs as Privleged User
+digraph {
+	node [shape=box]
+	node [style=filled]
+	node [fillcolor="#EEE9E9"]
+	rankdir=LR
+	splines=polyline
+	"System Service Discovery" [label="System Service Discovery" fillcolor="#A2E8E8"]
+}

@@ -1,0 +1,13 @@
+// 2018 regionals, Team 2: Unauthenticated Postgres remote Access
+digraph {
+	node [shape=box]
+	node [style=filled]
+	node [fillcolor="#EEE9E9"]
+	rankdir=LR
+	splines=polyline
+	"Network Service Scanning" [label="Network Service Scanning" fillcolor="#A2E8E8"]
+	"Pre-Attack" [label="Pre-Attack"]
+	"Brute Force, Valid Accounts, Remote Services" [label="Brute Force, Valid Accounts, Remote Services" fillcolor="#FF9E9E"]
+	"Network Service Scanning" -> "Pre-Attack" [label="2018-11-03 05:47:53 PM"]
+	"Pre-Attack" -> "Brute Force, Valid Accounts, Remote Services" [label="2018-11-03 05:49:59 PM"]
+}

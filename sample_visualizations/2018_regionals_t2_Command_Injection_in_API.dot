@@ -1,0 +1,13 @@
+// 2018 regionals, Team 2: Command Injection in API
+digraph {
+	node [shape=box]
+	node [style=filled]
+	node [fillcolor="#EEE9E9"]
+	rankdir=LR
+	splines=polyline
+	"Network Service Scanning" [label="Network Service Scanning" fillcolor="#A2E8E8"]
+	"Pre-Attack" [label="Pre-Attack"]
+	"Exploitation of Remote Services" [label="Exploitation of Remote Services" fillcolor="#FF9E9E"]
+	"Network Service Scanning" -> "Pre-Attack" [label="2018-11-03 07:08:23 AM"]
+	"Pre-Attack" -> "Exploitation of Remote Services" [label="2018-11-03 08:05:46 AM"]
+}

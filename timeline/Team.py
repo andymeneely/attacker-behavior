@@ -3,6 +3,7 @@
 import json
 import pandas
 
+from timeline import SVG_DIR
 from timeline.Timeline import Timeline
 
 class Team:
@@ -103,6 +104,18 @@ class Team:
             timelines.append(timeline)
 
         return timelines
+
+    def drawTimelines(self, out_dir=SVG_DIR, view=True):
+        timelines = list()
+        paths = list()
+        for timeline in self.getTimelines():
+            timeline, path = timeline.drawTimeline(self._year, self._team, self._competition, out_dir, view)
+            timelines.append(timeline)
+            paths.append(path)
+            if view == True: # pragma: no cover
+                input()
+
+        return timelines, paths
 
     def getYear(self):
         return self._year
