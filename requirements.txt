@@ -1,2 +1,4 @@
-
+graphviz
 pandas
+pydot-ng
+pyparsing
